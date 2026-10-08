@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareerMatch AI - Intelligent Job-Matching & Career Development</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/style.css" />
+
+    <!-- React 18 & ReactDOM UMD -->
+    <script src="./vendor/react.production.min.js"></script>
+    <script src="./vendor/react-dom.production.min.js"></script>
+    <!-- Babel Standalone compiler -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      (async () => {
+        const root = document.getElementById('root');
+        try {
+          const response = await fetch('./src/main.jsx');
+          if (!response.ok) {
+            throw new Error(`Unable to load the application script (${response.status}).`);
+          }
+
+          const source = await response.text();
+          const compiled = Babel.transform(source, {
+            presets: [['react', { runtime: 'classic' }]]
+          });
+          const script = document.createElement('script');
+          script.textContent = compiled.code;
+          document.body.appendChild(script);
+        } catch (error) {
+          console.error('Failed to start CareerMatch AI:', error);
+          root.textContent = 'CareerMatch AI could not load. Check the browser console and try refreshing.';
+        }
+      })();
+    </script>
+  </body>
+</html>
